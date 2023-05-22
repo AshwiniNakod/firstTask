@@ -11,7 +11,6 @@ router.post('/',(req,res)=>{
         res.send({"message" :"Invalid Login"})
     }
 
-
 })
 
 export const verify_optRouter =router;

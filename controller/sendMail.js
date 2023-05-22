@@ -1,5 +1,6 @@
 import nodemailer from "nodemailer";
 import otpGenerator from "otp-generator";
+import { createUsers, getUserByEmail } from "./dbQuery.js";
 
 let otpgerator = () => {
   let otp_gen = otpGenerator.generate(5, {
@@ -34,15 +35,29 @@ async function sendingMail() {
   console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
 }
 export async function sendEmail(req, res) {
-  await res.send({
-    message:
-      "User was registered successfully! Please check your email and OTP send to your mail " + 
-      `${req.body.email}`
+  const { email, password } = req.body;
 
-  });
-   sendingMail();
+  const isUserInDb = await getUserByEmail(email);
+  // console.log(isUserInDb)
+  if (isUserInDb) {
+    res.status(400).send({ message: "user already exists" });
+  } else {
+    const result = await createUsers({
+      email: email,
+      password: password,
+    });
+    // res.send(result)
+    await res.send({
+      message:
+        "User was registered successfully! Please check your email and OTP send to your mail " +
+        `${req.body.email}`,
+      result: result,
+    });
+    await sendingMail();
+  }
 }
 
 // sendEmail().catch(console.error);
+
 
 export let otp = OTP;
