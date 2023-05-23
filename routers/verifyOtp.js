@@ -1,26 +1,16 @@
 import express from 'express'
-// import { otp } from '../controller/sendMail.js'
-import { User } from '../model/userSchema.js';
 import { Otp } from '../model/otpSchema.js';
+import { verify } from 'jsonwebtoken';
+import { verifyOtp } from '../controller/verifyOTP.js';
 const router = express.Router()
 
 
-export const verifyOtp = async(req,res)=>{
-    // res.send("verify otp")
-    const { email, otp } = req.body;
-    const user = await Otp.findOne({email});
-    if(!user){
-        res.send({message:"Invalid user or email"})
-    }else{
-        if(otp === user.otp){
-            res.send({message:"Otp is validate successfull."})
-        }else{
-            res.send({message:"Enter correct Otp!"})
-        }
-    }
-   
-    // res.send(user);
-}
+router.post('/',verifyOtp)
+
+export const verifyRouter = router
+
+
+// api /sendotp/
 
   
 // router.post('/',(req,res)=>{
@@ -35,3 +25,4 @@ export const verifyOtp = async(req,res)=>{
 // })
 
 // export const verify_optRouter =router;
+

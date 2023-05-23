@@ -11,7 +11,8 @@ async function genHashedPassword(password){
 }    
 
 export async function sendEmail(req, res) {
-  const { email, password } = req.body;
+  try {
+    const { email, password } = req.body;
    const isUserInDb =  await User.findOne({email:email})
   // console.log(isUserInDb)
   if(isUserInDb){
@@ -19,16 +20,16 @@ export async function sendEmail(req, res) {
   }else{
     const hashedPassword = await genHashedPassword(password)
     // console.log(hashedPassword,password)
-
     const user = new User({email,password:hashedPassword})
     await user.save();
     await res.send({message:`User was registered successfully! Please check your email and OTP send to your email ${req.body.email}`})
     await sendingMail(email);
     
-
-  
   }
  
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 // sendEmail().catch(console.error);

@@ -4,9 +4,8 @@ import { loginRouter } from './routers/login.js';
 import { registerRouter } from './routers/register.js';
 import { taskRouter } from './routers/task.js';
 import { createConnection } from './createConnection.js';
-// import { createConnection } from 'mongoose';
-import mongoose, { Schema } from 'mongoose';
-import { verifyOtp } from './routers/verifyOtp.js';
+import { reSendOtpRouter } from './routers/resendOtp.js';
+import { verifyRouter } from './routers/verifyOtp.js';
 
 const PORT = process.env
 dotenv.config()
@@ -22,7 +21,9 @@ createConnection()
 
 app.use('/register',registerRouter)
 app.use('/login',loginRouter)
-app.use('/verifyOtp',verifyOtp)
+app.use('/verifyOtp',verifyRouter)
+app.use('/reSendOtp',reSendOtpRouter)
+
 app.use('/task',taskRouter)
 
 
