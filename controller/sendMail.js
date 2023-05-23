@@ -1,63 +1,36 @@
-import nodemailer from "nodemailer";
-import otpGenerator from "otp-generator";
-import { createUsers, getUserByEmail } from "./dbQuery.js";
+import bcrypt from 'bcryptjs';
+import { User } from "../model/userSchema.js";
+import {  sendingMail } from "./sendingMail.js";
 
-let otpgerator = () => {
-  let otp_gen = otpGenerator.generate(5, {
-    upperCaseAlphabets: false,
-    specialChars: false,
-  });
-  // console.log(otp)
-  return otp_gen;
-};
-let OTP = otpgerator();
 
-async function sendingMail() {
-  let transporter = nodemailer.createTransport({
-    host: "smtp.ethereal.email",
-    port: 587,
-    secure: false, // true for 465, false for other ports
-    auth: {
-      user: "terrance.pollich@ethereal.email", // generated ethereal user
-      pass: "bgygFPhFtjV1C5nhg8", // generated ethereal password
-    },
-  });
-  // send mail with defined transport object
-  let info = await transporter.sendMail({
-    from: '"Fred Foo 👻" <nakodashwini@gmail.com>', // sender address
-    to: "bar@example.com", // list of receivers
-    subject: "Hello ✔", // Subject line
-    text: `Your OTP : ${OTP}`, // plain text body
-    html: `<p>Your OTP: ${OTP}</p>`, // html body
-  });
 
-  console.log("Message sent: %s", info.messageId);
-  console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-}
+async function genHashedPassword(password){
+  const salt = await bcrypt.genSalt(10)
+  const hashedPassword = await bcrypt.hash(password,salt)
+  return hashedPassword;
+}    
+
 export async function sendEmail(req, res) {
   const { email, password } = req.body;
-
-  const isUserInDb = await getUserByEmail(email);
+   const isUserInDb =  await User.findOne({email:email})
   // console.log(isUserInDb)
-  if (isUserInDb) {
-    res.status(400).send({ message: "user already exists" });
-  } else {
-    const result = await createUsers({
-      email: email,
-      password: password,
-    });
-    // res.send(result)
-    await res.send({
-      message:
-        "User was registered successfully! Please check your email and OTP send to your mail " +
-        `${req.body.email}`,
-      result: result,
-    });
-    await sendingMail();
+  if(isUserInDb){
+    res.send({message:"user already exist"})
+  }else{
+    const hashedPassword = await genHashedPassword(password)
+    // console.log(hashedPassword,password)
+
+    const user = new User({email,password:hashedPassword})
+    await user.save();
+    await res.send({message:`User was registered successfully! Please check your email and OTP send to your email ${req.body.email}`})
+    await sendingMail(email);
+    
+
+  
   }
+ 
 }
 
 // sendEmail().catch(console.error);
 
 
-export let otp = OTP;
