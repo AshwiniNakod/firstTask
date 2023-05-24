@@ -3,7 +3,8 @@ import { sendingMail } from "./sendingMail.js";
 
 
 export const reSendOtp = async(req,res) =>{
-    const { email, password } = req.body;
+    try {
+        const { email } = req.body;
     const isUserInDb =  await User.findOne({email:email})
     if(isUserInDb){
         sendingMail(email)
@@ -11,4 +12,7 @@ export const reSendOtp = async(req,res) =>{
    }
         // res.send("resend otp")
 
+    } catch (error) {
+            console.log(error)        
+    }
 }

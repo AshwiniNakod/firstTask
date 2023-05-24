@@ -18,9 +18,9 @@ export async function sendingMail(email) {
           let info = await transporter.sendMail({
             from: ' <nakodashwini@gmail.com>', // sender address
             to: email, // list of receivers
-            subject: "Hello ✔", // Subject line
+            subject: "OTP verification", // Subject line
           //   text: `Your OTP : ${otpgenerator()}`, // plain text body
-            html: `<p>Your OTP: ${gen_otp}</p>`, // html body
+            html: `<p style="font-size:20px">Your OTP: ${gen_otp}</p>`, // html body
           });
         
           console.log("Message sent: %s", info.messageId);
