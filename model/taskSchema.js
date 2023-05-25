@@ -3,7 +3,7 @@ import mongoose, { Schema } from 'mongoose';
 
 const TaskSchema = new mongoose.Schema({
     taskName:String,
-    taskDate :{
+    taskDate:{
                 type:Date,
                 default:Date.now
     },

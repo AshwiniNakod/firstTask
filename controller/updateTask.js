@@ -1,7 +1,8 @@
 import jwt from "jsonwebtoken";
+import { Task } from "../model/taskSchema.js";
 
 
 export const updateTask = (req,res) =>{
-    let token = jwt.sign({ email: req.body.email }, process.env.SECRET_KEY, {expiresIn: '5min'});
-    res.send({message:"task is updated"})
+        Task.update({})
+    // res.send({message:"task is updated"})
 }
