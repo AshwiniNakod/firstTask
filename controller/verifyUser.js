@@ -6,12 +6,7 @@ export const verifyUser = async (req, res) => {
   let data = req.body;
   let { email, password } = data;
   const userInDb = await User.findOne({ email: email });
-    // console.log(userInDb.verify)
-    // if(userInDb.verify){
-    //   User.updateOne({email:email},$set:{"verify":"false"})
-  
-    // }
-  //   console.log(userInDb);
+    
   if (!userInDb) {
     res.status(401).send({ message: "Invalid Credentials !" });
   } else {
@@ -30,4 +25,3 @@ export const verifyUser = async (req, res) => {
 };
 
 
-// export const verifyUsers = verifyUser;

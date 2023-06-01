@@ -10,9 +10,10 @@ export const reSendOtp = async(req,res) =>{
         sendingMail(email)
         res.send({message:"otp is sent"})
    }
-        // res.send("resend otp")
 
     } catch (error) {
-            console.log(error)        
+            // console.log(error)        
+            return res.status(500).send({message:error.message})
+
     }
 }

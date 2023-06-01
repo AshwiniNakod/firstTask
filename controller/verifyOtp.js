@@ -6,7 +6,7 @@ export const verifyOtp = async(req,res)=>{
         const { email, otp } = req.body;
     const user = await Otp.findOne({email});
     const findUser = await User.findOne({email})
-    console.log(findUser)
+    // console.log(findUser)
     if(findUser.verify) {
         return res.send({message:"Already verified"})
     }
@@ -23,7 +23,7 @@ export const verifyOtp = async(req,res)=>{
     }
    
     } catch (error) {
-        console.log(error)
+        // console.log(error)
         res.status(500).send(error)
     }
     // res.send(user);
