@@ -7,7 +7,7 @@ export const getAllTask = async(req,res) =>{
         const page=req.query.page
         let limit = (req.query.limit)
         let skip = (page-1) * limit
-        console.log(page,limit,skip)
+        // console.log(page,limit,skip)
 
         let result=await Task.find({}).skip(skip).limit(limit)
          res.send({result,total:result.length})        

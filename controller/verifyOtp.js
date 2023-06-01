@@ -8,10 +8,10 @@ export const verifyOtp = async(req,res)=>{
     const findUser = await User.findOne({email})
     console.log(findUser)
     if(findUser.verify) {
-        return res.send("Already verified")
+        return res.send({message:"Already verified"})
     }
     if(!user){
-        res.send({message:"Invalid user or email"})
+        res.send({message:"Invalid user or OTP"})
     }else{
        
         if(otp === user.otp){
