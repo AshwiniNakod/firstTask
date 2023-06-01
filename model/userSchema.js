@@ -4,7 +4,7 @@ import mongoose, { Schema } from 'mongoose';
 const userSchema  = new mongoose.Schema({
     verify:{
         type:Boolean,
-        default:true
+        default:false
     },
     email :String,
     password: String,

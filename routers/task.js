@@ -9,9 +9,9 @@ import { auth } from '../middleware/auth.js';
 const router = express.Router();
 
 router.post('/createTask',auth,createTask)
-router.put('/updateTask',auth,updateTask)  
+router.put('/updateTask/:id',auth,updateTask)  
 router.get('/getAllTask',auth,getAllTask)      
-router.put('/reArrangeTask',auth,reArrangeTask)      
+router.put('/reArrangeTask/:id',auth,reArrangeTask)      
 router.delete('/deleteTask/:id',auth,deleteTask)      
 
 

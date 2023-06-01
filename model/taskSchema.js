@@ -2,7 +2,8 @@ import mongoose, { Schema } from 'mongoose';
 
 
 const TaskSchema = new mongoose.Schema({
-    taskName:String,
+    taskName:Array,
+    
     taskDate:{
                 type:Date,
                 default:Date.now

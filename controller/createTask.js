@@ -6,10 +6,13 @@ export const createTask = async(req,res) =>{
                 const {taskName,taskStatus} = req.body
                 const task =  new Task({taskName,taskStatus}) 
                 await task.save()
+                // await Task.insertOne(task)
+                // await Task.task.insertOne({ taskname: taskName,taskStatus:taskStatus });
+
                 res.send(task)
          
         } catch (error) {
-                response.status(500).send(error);       
+                return res.status(500).send({message:error.message})
         }
                
 }
