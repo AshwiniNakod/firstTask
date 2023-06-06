@@ -1,8 +1,8 @@
 import express, { json } from  'express'
 import dotenv from "dotenv"
-import { taskRouter } from './routers/task.js';
+import { taskRouter } from './routers/taskRouter.js';
 import { createConnection } from './createConnection.js';
-import { userRouter } from './routers/user.js';
+import { userRouter } from './routers/userRouter.js';
 
 const PORT = process.env
 dotenv.config()

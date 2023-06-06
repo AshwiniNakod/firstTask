@@ -1,10 +1,6 @@
 import express from  'express'
-import { createTask } from '../controller/createTask.js';
-import { updateTask } from '../controller/updateTask.js';
-import { getAllTask } from '../controller/getAllTask.js';
-import { deleteTask } from '../controller/deleteTask.js';
-import { reArrangeTask } from '../controller/reArrangeTask.js';
 import { auth } from '../middleware/auth.js';
+import { createTask, deleteTask, getAllTask, reArrangeTask, updateTask } from '../controller/taskController.js';
 
 const router = express.Router();
 
@@ -17,7 +13,4 @@ router.delete('/deleteTask/:id',auth,deleteTask)
 
 
       
-
-      
-
 export const taskRouter = router    

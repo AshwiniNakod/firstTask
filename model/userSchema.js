@@ -8,6 +8,10 @@ const userSchema  = new mongoose.Schema({
     },
     email :String,
     password: String,
+    randomString:{
+        type:String,
+        default:''
+    }
 },{timestamps:true})
 
 export const User = new mongoose.model("User",userSchema)      //collection creation
